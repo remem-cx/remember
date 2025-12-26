@@ -1,1 +1,133 @@
+  <div class="auth-panels">
+    <!-- Login Panel -->
+    <form id="loginForm" class="panel" novalidate>
+      <h2>登录</h2>
 
+      <label class="field">
+        <span class="label">邮箱</span>
+        <input type="email" id="loginEmail" required autocomplete="username" placeholder="you@example.com">
+        <div class="error" id="loginEmailError"></div>
+      </label>
+
+      <label class="field">
+        <span class="label">密码</span>
+        <div class="pwd-row">
+          <input type="password" id="loginPassword" required autocomplete="current-password" placeholder="请输入密码">
+          <button type="button" class="btn-icon" id="toggleLoginPwd" aria-label="显示密码">👁️</button>
+        </div>
+        <div class="error" id="loginPasswordError"></div>
+      </label>
+
+      <div class="actions-row">
+        <button type="submit" class="btn primary">登录</button>
+        <div class="links">
+          <a href="#" id="forgotPwdLink">忘记密码</a>
+          <a href="#" id="toRegisterLink">注册账号</a>
+        </div>
+      </div>
+
+      <div class="server-error" id="loginServerError" aria-live="polite"></div>
+    </form>
+
+    <!-- Register Panel -->
+    <form id="registerForm" class="panel hidden" novalidate>
+      <h2>注册</h2>
+
+      <label class="field">
+        <span class="label">邮箱</span>
+        <input type="email" id="regEmail" required autocomplete="email" placeholder="you@example.com">
+        <div class="error" id="regEmailError"></div>
+      </label>
+
+      <label class="field">
+        <span class="label">设置密码</span>
+        <input type="password" id="regPassword" required autocomplete="new-password" placeholder="至少8位，大小写 + 数字 + 特殊字符更强">
+        <div class="pwd-meta">
+          <div class="pwd-strength">
+            <div id="pwdStrengthBar" class="bar"></div>
+          </div>
+          <div id="pwdStrengthText" class="strength-text">强度：-</div>
+        </div>
+        <div class="error" id="regPasswordError"></div>
+      </label>
+
+      <label class="field">
+        <span class="label">验证码</span>
+        <div class="code-row">
+          <input type="text" id="regCode" placeholder="输入验证码" autocomplete="one-time-code" maxlength="6">
+          <button type="button" class="btn" id="sendCodeBtn">发送验证码</button>
+        </div>
+        <div class="hint" id="regCodeHint">点击“发送验证码”来获取，演示会在页面提示验证码。</div>
+        <div class="error" id="regCodeError"></div>
+      </label>
+
+      <label class="field checkbox-field">
+        <input type="checkbox" id="agreeTerms">
+        <span>我已阅读并同意 <a href="#" class="link">用户协议</a> 与 <a href="#" class="link">隐私政策</a></span>
+      </label>
+      <div class="error" id="regTermsError"></div>
+
+      <div class="actions-row">
+        <button type="submit" class="btn primary">注册</button>
+        <div class="links">
+          <a href="#" id="toLoginLink">已有账号，去登录</a>
+        </div>
+      </div>
+
+      <div class="server-error" id="regServerMsg" aria-live="polite"></div>
+    </form>
+  </div>
+</section>
+
+<!-- Main app section (after login) -->
+<section class="app hidden" id="mainSection" aria-labelledby="mainTitle">
+  <header class="app-header">
+    <h1 id="mainTitle">remem</h1>
+    <div>
+      <button class="btn" id="logoutBtn">退出</button>
+    </div>
+  </header>
+
+  <section class="upload-area" aria-label="照片上传">
+    <div class="upload-controls">
+      <label class="btn upload-btn">
+        选择照片
+        <input type="file" id="fileInput" accept="image/*" multiple hidden>
+      </label>
+      <button class="btn" id="clearAllBtn">清空所有</button>
+      <div class="hint">支持单张或多张上传。可拖拽到下方缩略图区域（演示）。</div>
+    </div>
+
+    <div id="dropZone" class="dropzone" tabindex="0" aria-label="照片缩略图区，支持拖拽上传">
+      <div id="thumbs" class="thumbs-grid" aria-live="polite"></div>
+      <div id="emptyHint" class="empty-hint">暂无照片，点击“选择照片”或将图片拖入此区域上传。</div>
+    </div>
+  </section>
+
+  <!-- image viewer modal -->
+  <div id="viewer" class="viewer hidden" role="dialog" aria-modal="true" aria-label="查看照片">
+    <button class="viewer-close btn-icon" id="viewerClose" aria-label="关闭">✖</button>
+    <img id="viewerImg" alt="大图预览">
+    <a id="viewerDownload" class="btn" download>下载</a>
+  </div>
+</section>
+
+<!-- Forgot password modal -->
+<div id="forgotModal" class="modal hidden" role="dialog" aria-modal="true">
+  <div class="modal-inner">
+    <h3>重置密码</h3>
+    <label class="field">
+      <span class="label">邮箱</span>
+      <input type="email" id="forgotEmail" placeholder="you@example.com">
+      <div class="error" id="forgotEmailError"></div>
+    </label>
+    <div class="actions-row">
+      <button class="btn primary" id="forgotSendBtn">发送重置验证码</button>
+      <button class="btn" id="forgotClose">取消</button>
+    </div>
+    <div id="forgotMsg" class="hint"></div>
+  </div>
+</div>
+
+<!-- toast area for transient messages -->
+<div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
